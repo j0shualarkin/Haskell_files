@@ -1,0 +1,5 @@
+https://www.youtube.com/watch?v=K9nA9JklNA4
+https://stackoverflow.com/questions/18160807/haskell-io-hgetcontents-illegal-operation-handle-is-closed
+https://stackoverflow.com/questions/1878974/redefine-tab-as-4-spaces
+https://docs.google.com/document/u/0/d/15AG3c7C3v748mrwu8D_XjpdMdMMZDj3Hwv_uem7-ePU/mobilebasic
+https://www.youtube.com/watch?v=Xm0uHWx-2Xg
