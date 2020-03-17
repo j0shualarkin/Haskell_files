@@ -1,0 +1,73 @@
+#lang racket/base
+
+
+(define Y
+  '(App (App 
+         (Lam "f" 
+              (Lam "n" 
+                   (If (Zerop (Var "n"))
+                       (Num 1) 
+                       (Times (Var "n") 
+                              (App (App (Var "f") (Var "f")) (Sub1 (Var "n")))))))
+         (Lam "f" 
+              (Lam "n" 
+                   (If (Zerop (Var "n"))
+                       (Num 1) 
+                       (Times (Var "n") 
+                              (App (App (Var "f") (Var "f")) (Sub1 (Var "n"))))))))
+        (Num 5)))
+
+(define ! 
+  '(Lam "n" 
+       (If (Zerop (Var "n"))
+           (Num 1) 
+           (Times (Var "n") 
+                  (App (App (Var "f") (Var "f")) (Sub1 (Var "n")))))))
+
+(define rec-step
+  '(Times (Var "n") 
+          (App (App (Var "f") (Var "f")) (Sub1 (Var "n")))))
+
+
+(require racket/match)
+
+(define (convert LC)
+  (match LC
+    [(? symbol? y) `(Var ,(id->string y))]
+    [`(λ (,x) ,b) `(Lam ,(id->string x) (convert b))]
+    [`(,rator ,rand) `(App ,(convert rator) ,(convert rand))]))
+
+
+(check-equal? (convert '(λ (x) x)) '(Lam "x" (Var "x")))
+
+
+;; =====================
+
+
+(require rackunit
+         (for-syntax syntax/parse))
+
+
+(define-syntax-rule (var a)
+  #'(Var ,a))
+
+(check-equal? (var "f" ) '(Var "f"))
+(check-equal? (var "n") '(Var "n"))
+
+(define-syntax-rule (sub1* n)
+  #`(Sub1 ,n))
+
+(define-syntax-rule (num n)
+  #`(Num ,n))
+
+(define-syntax-rule (times m n)
+  #`(Times ,m ,n))
+
+(define-syntax-rule (ef q c a)
+  #`(If ,q ,c ,a))
+
+(define-syntax-rule (zerop n)
+  #`(Zerop ,n))
+
+
+
