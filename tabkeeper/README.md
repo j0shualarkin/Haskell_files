@@ -1,4 +1,4 @@
-# .TabKeeper
+# TabKeeper
 
 You have a file with a number of urls. 
 Tabkeeper will help you pick a URL from that list,
